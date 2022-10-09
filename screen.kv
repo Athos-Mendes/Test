@@ -1,0 +1,108 @@
+WindowManager:
+    MainMenu:
+    CameraMenu:
+    FilesMenu:
+
+<MainMenu>:
+    name: 'main'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label: 
+            text: 'Awesome App'
+        
+        Button:
+            text: 'Camera'
+            on_release:
+                app.root.current = 'camera'
+                root.manager.transition.direction = 'left'
+
+        Button:
+            text: 'Files'
+            on_release:
+                app.root.current = 'files'
+                root.manager.transition.direction = 'left'
+
+        Button:
+            text: 'Exit'
+            on_release: app.stop()
+
+<CameraMenu>:
+    name: 'camera'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Preview:
+            id: preview
+            aspect_ratio: '16:9'
+
+        Button:
+            text: 'Activate'
+            on_release: preview.connect_camera(enable_analyze_pixels = True)
+
+        Button:
+            text: 'Take a Picture'
+            on_release: preview.capture_photo()
+        
+        Button:
+            text: 'Return'
+            on_release:
+                preview.disconnect_camera()
+                app.root.current = 'main'
+                root.manager.transition.direction = 'right'
+
+<FilesMenu>:
+    name: 'files'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            id: sample
+            font_size: 20
+            text:
+
+        Label:
+            id: sample2
+            font_size: 20
+            text:
+
+        Label:
+            id: sample3
+            font_size: 10
+            text:
+
+        Label:
+            id: sample4
+            font_size: 18
+            text:
+
+        Label:
+            id: sample5
+            font_size: 18
+            text:
+
+        Button:
+            text: 'Show'
+            on_release: root.show()
+
+        Button:
+            text: 'Return'
+            on_release:
+                app.root.current = 'main'
+                root.manager.transition.direction = 'right'
+
+<MyPopup>:
+    title: 'Warning'
+    size_hint: (0.6, 0.4)
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+    auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Something just happened...'
+        Button:
+            text: 'Return'
+            on_release: root.dismiss()
